@@ -1,7 +1,7 @@
 let express=require('express');
 let router=express.Router();
 let bcrypt = require('bcrypt');
-let {users} = require('../models/user');
+let {users} = require('../models/users');
 
 router.post("/register",async(req,res)=>{
     let data = req.body
@@ -15,12 +15,19 @@ router.post("/login",async (req,res)=>{
     if(user){
         let passmatch=await bcrypt.compare(req.body.password,user.password);
         if(passmatch){
-            res.send("Login success");
+            res.send({"msg":"Login Success",
+                "user":{
+                    _id:user._id,
+                    name:user.name,
+                    email:user.email,
+                    role:user.role
+                }
+            });
         }else{
-            res.send("Password invalid");
+            res.send({"msg":"Password Invalid"});
         }
     }else{
-        res.send("Email invalid");
+        res.send({"msg":"Email invalid"});
     }
 })
 router.get("/viewtasks",(req,res)=>{

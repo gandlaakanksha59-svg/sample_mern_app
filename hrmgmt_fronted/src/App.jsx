@@ -9,6 +9,9 @@ import Register from './pages/Register'
 
 import {Routes,Route} from 'react-router-dom'
 
+import EmpHome from './pages/EmpHome'
+import HrHome from './pages/HrHome'
+import AdminHome from './pages/AdminHome'
 
 function App() {
   return (
@@ -16,6 +19,9 @@ function App() {
       <Header />
       <Routes>
         <Route path="/"element={<Home></Home>}></Route>
+        <Route path="/emp"element={<EmpHome></EmpHome>}></Route>
+        <Route path="/hr"element={<HrHome></HrHome>}></Route>
+        <Route path="/admin"element={<AdminHome></AdminHome>}></Route>
         <Route path="/about"element={<About></About>}></Route>
         <Route path="/contact"element={<Contact></Contact>}></Route>
         <Route path="/services"element={<Services></Services>}></Route>

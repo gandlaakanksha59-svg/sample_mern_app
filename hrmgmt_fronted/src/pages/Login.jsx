@@ -1,15 +1,24 @@
 import {useState} from "react"
+import { useNavigate } from "react-router-dom"
 
 function Login(){
-    let [emailid,setEmailid]=useState("")
+    let [email,setEmail]=useState("")
     let [password,setPassword]=useState("")
+    let navigate = useNavigate()
 
-    let handleLogin=(e)=>{
+    let handleLogin=async(e)=>{
         e.preventDefault()
-        if(emailid=="admin@gmail.com" && password == "admin"){
-            console.log("Login success")
+        if(email=="admin@gmail.com" && password == "admin"){
+            navigate("/adminhome")
         }else{
-            console.log("Login failed")
+        let req=await fetch("http://localhost:3000/api/emp/login",{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({email,password})
+
+        });
+            let res=await req.json()
+            console.log(res)
         }
 
     }
@@ -17,13 +26,13 @@ function Login(){
     return(
         <div>
             <form onSubmit={handleLogin}>
-                <input type = "text" value = {emailid}
-                onChange={(event)=>setEmailid(event.target.value)} placeholder="Enter emailid"></input><br/>
+                <input type = "text" value = {email}
+                onChange={(event)=>setEmail(event.target.value)} placeholder="Enter email"></input><br/>
                 <input type="password" value = {password}
                 onChange={(e)=>setPassword(e.target.value)} placeholder="Enter your password"></input><br/>
                 <button type="submit">Login</button>
             </form>
-            <p>{emailid}</p>
+            <p>{email}</p>
             <p>{password}</p>
 
         </div>
